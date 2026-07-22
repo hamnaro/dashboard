@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)https://arthi.diddu.web.id/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Secure Access · VoLTE &amp; 5G Roaming Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff; --panel:#ffffff; --glass-border:rgba(15,20,30,0.10);
+    --glass-soft:rgba(15,20,30,0.03); --accent:#32BCAD; --accent2:#C6168D;
+    --text:#12151c; --muted:#6b7280; --danger:#e0293f; --ok:#0f9d58;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:var(--bg);
+    font-family:'Inter',sans-serif; color:var(--text); padding:20px;
+  }
+  .card{
+    width:100%; max-width:400px; background:var(--panel);
+    border:1px solid var(--glass-border); border-radius:16px;
+    box-shadow:0 20px 45px -20px rgba(15,20,30,0.18);
+    padding:32px 30px 28px; position:relative; overflow:hidden;
+  }
+  .card::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .lock-icon{
+    width:46px; height:46px; border-radius:12px;
+    background:var(--glass-soft); border:1px solid var(--glass-border);
+    display:flex; align-items:center; justify-content:center; margin-bottom:18px;
+  }
+  .lock-icon svg{width:22px;height:22px;stroke:var(--accent);}
+  h1{
+    font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700;
+    margin:0 0 4px;
+  }
+  .sub{
+    font-size:13px; color:var(--muted); margin:0 0 26px; line-height:1.5;
+  }
+  label{
+    display:block; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    letter-spacing:0.03em; text-transform:uppercase; color:var(--muted);
+    margin-bottom:6px;
+  }
+  .field{margin-bottom:16px;}
+  .input-wrap{position:relative;}
+  input[type="text"], input[type="password"]{
+    width:100%; padding:11px 13px; border-radius:9px;
+    background:#f7f8fa; border:1px solid var(--glass-border); color:var(--text);
+    font-family:'Inter',sans-serif; font-size:14px; outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]:focus, input[type="password"]:focus{
+    border-color:var(--accent); box-shadow:0 0 0 3px rgba(50,188,173,0.18);
+  }
+  .toggle-pw{
+    position:absolute; right:10px; top:50%; transform:translateY(-50%);
+    background:none; border:none; color:var(--muted); font-family:'IBM Plex Mono',monospace;
+    font-size:11px; cursor:pointer; padding:4px 6px;
+  }
+  .toggle-pw:hover{color:var(--text);}
+  button.submit{
+    width:100%; margin-top:6px; padding:12px; border:none; border-radius:9px;
+    background:linear-gradient(90deg, var(--accent), #29a89b);
+    color:#04201c; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px;
+    cursor:pointer; transition:filter .15s, transform .05s;
+  }
+  button.submit:hover{filter:brightness(1.08);}
+  button.submit:active{transform:translateY(1px);}
+  .msg{
+    display:none; margin-top:16px; padding:10px 12px; border-radius:8px;
+    font-size:12.5px; line-height:1.5; font-family:'Inter',sans-serif;
+    border:1px solid transparent;
+  }
+  .msg.show{display:flex; align-items:flex-start; gap:8px;}
+  .msg.error{
+    background:rgba(224,41,63,0.08); border-color:rgba(224,41,63,0.3); color:#b0182b;
+  }
+  .msg.success{
+    background:rgba(15,157,88,0.08); border-color:rgba(15,157,88,0.3); color:#0b7a44;
+  }
+  .msg svg{width:15px;height:15px;flex:none;margin-top:1px;}
+  .foot{
+    margin-top:22px; padding-top:16px; border-top:1px solid var(--glass-border);
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--muted);
+    display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;
+  }
+  .shake{ animation:shake .4s; }
+  @keyframes shake{
+    10%,90%{transform:translateX(-1px);}
+    20%,80%{transform:translateX(2px);}
+    30%,50%,70%{transform:translateX(-4px);}
+    40%,60%{transform:translateX(4px);}
+  }
+</style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="lock-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+      </svg>
+    </div>
+    <h1>Secure Dashboard Access</h1>
+    <p class="sub">Sign in to view the VoLTE &amp; 5G Roaming Dashboard.</p>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="field">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" autocomplete="username" placeholder="Enter username" required="">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Enter password" required="">
+          <button type="button" class="toggle-pw" id="togglePw">SHOW</button>
+        </div>
+      </div>
+      <button type="submit" class="submit">Sign In</button>
+
+      <div class="msg error" id="errorMsg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span>Incorrect username or password. Please try again.</span>
+      </div>
+      <div class="msg success" id="successMsg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
+        <span>Access granted. Redirecting to dashboard…</span>
+      </div>
+    </form>
+
+    <div class="foot">
+      <span>VoLTE &amp; 5G Roaming Dashboard</span>
+      <span>Authorized access only</span>
+    </div>
+  </div>
+
+<script>
+  // NOTE: This is a client-side gate for basic access control convenience only.
+  // Credentials are static and visible in this file's source — it does not
+  // provide real security. For production use, authenticate against a server.
+  const VALID_USERNAME = "user";
+  const VALID_PASSWORD = "$roaming@2026!";
+  const TARGET_PAGE = "Core_NE_NF_Inventory_Dashboard.html";
+
+  const form = document.getElementById('loginForm');
+  const card = document.getElementById('card');
+  const errorMsg = document.getElementById('errorMsg');
+  const successMsg = document.getElementById('successMsg');
+  const togglePw = document.getElementById('togglePw');
+  const pwInput = document.getElementById('password');
+
+  togglePw.addEventListener('click', () => {
+    const isPw = pwInput.type === 'password';
+    pwInput.type = isPw ? 'text' : 'password';
+    togglePw.textContent = isPw ? 'HIDE' : 'SHOW';
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    errorMsg.classList.remove('show');
+    successMsg.classList.remove('show');
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+      successMsg.classList.add('show');
+      form.querySelector('button.submit').disabled = true;
+      sessionStorage.setItem('volteDashboardAuth', 'true');
+      setTimeout(() => {
+        window.location.href = TARGET_PAGE;
+      }, 700);
+    } else {
+      errorMsg.classList.add('show');
+      card.classList.remove('shake');
+      // force reflow to restart animation
+      void card.offsetWidth;
+      card.classList.add('shake');
+      pwInput.value = '';
+      pwInput.focus();
+    }
+  });
+</script>
+
+
+</body></html>
